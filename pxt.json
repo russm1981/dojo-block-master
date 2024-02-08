@@ -1,5 +1,6 @@
 {
     "name": "dojo-block-master",
+    "version": "1.0.0",
     "description": "",
     "dependencies": {
         "core": "*"
