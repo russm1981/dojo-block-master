@@ -16,7 +16,7 @@ namespace dojo {
         }
     }
 
-    const MAX_BRIGHTNESS = 0.4
+    const MAX_BRIGHTNESS = 0.3
 
     export class servo_position {
         left: number = 90;
@@ -473,26 +473,26 @@ namespace dojo {
         degrees_rel = Math.constrain(degrees_rel, -20, 20)
         switch (ser_id) {
             case SERVO_ID.SERVO_ALL:
-                bot_servo_int(SERVO_ID.SERVO_LEFT, servo_left_position + degrees_rel) //, true);
-                bot_servo_int(SERVO_ID.SERVO_RIGHT, servo_right_position + degrees_rel) //, true);
-                bot_servo_int(SERVO_ID.SERVO_ROTATE, servo_rotate_position + degrees_rel) //, true);
-                bot_servo_int(SERVO_ID.SERVO_JAW1, servo_jaw1_position + degrees_rel) //, true);
-                bot_servo_int(SERVO_ID.SERVO_JAW2, servo_jaw2_position + degrees_rel) //, true);
+                bot_servo_int(SERVO_ID.SERVO_LEFT, servo_left_position + degrees_rel, true);
+                bot_servo_int(SERVO_ID.SERVO_RIGHT, servo_right_position + degrees_rel, true);
+                bot_servo_int(SERVO_ID.SERVO_ROTATE, servo_rotate_position + degrees_rel, true);
+                bot_servo_int(SERVO_ID.SERVO_JAW1, servo_jaw1_position + degrees_rel, true);
+                bot_servo_int(SERVO_ID.SERVO_JAW2, servo_jaw2_position + degrees_rel, true);
                 break
             case SERVO_ID.SERVO_LEFT:
-                bot_servo_int(SERVO_ID.SERVO_LEFT, servo_left_position + degrees_rel) //, true);
+                bot_servo_int(SERVO_ID.SERVO_LEFT, servo_left_position + degrees_rel, true);
                 break
             case SERVO_ID.SERVO_RIGHT:
-                bot_servo_int(SERVO_ID.SERVO_RIGHT, servo_right_position + degrees_rel) //, true);
+                bot_servo_int(SERVO_ID.SERVO_RIGHT, servo_right_position + degrees_rel, true);
                 break
             case SERVO_ID.SERVO_ROTATE:
-                bot_servo_int(SERVO_ID.SERVO_ROTATE, servo_rotate_position + degrees_rel) //, true);
+                bot_servo_int(SERVO_ID.SERVO_ROTATE, servo_rotate_position + degrees_rel, true);
                 break
             case SERVO_ID.SERVO_JAW1:
-                bot_servo_int(SERVO_ID.SERVO_JAW1, servo_jaw1_position + degrees_rel) //, true);
+                bot_servo_int(SERVO_ID.SERVO_JAW1, servo_jaw1_position + degrees_rel, true);
                 break
             case SERVO_ID.SERVO_JAW2:
-                bot_servo_int(SERVO_ID.SERVO_JAW2, servo_jaw2_position + degrees_rel) //, true);
+                bot_servo_int(SERVO_ID.SERVO_JAW2, servo_jaw2_position + degrees_rel, true);
                 break
         }
     }
@@ -512,26 +512,25 @@ namespace dojo {
     export function bot_servo_position(ser_id: SERVO_ID, degrees: number): void {
         if (ser_id == SERVO_ID.SERVO_ALL) {
             debug(`servo_internal ALL`)
-            bot_servo_int(SERVO_ID.SERVO_LEFT, degrees) //, false);
-            bot_servo_int(SERVO_ID.SERVO_RIGHT, degrees) //, false);
-            bot_servo_int(SERVO_ID.SERVO_ROTATE, degrees) //, false);
-            bot_servo_int(SERVO_ID.SERVO_JAW1, degrees) //, false);
-            bot_servo_int(SERVO_ID.SERVO_JAW2, degrees) //, false);
+            bot_servo_int(SERVO_ID.SERVO_LEFT, degrees, false);
+            bot_servo_int(SERVO_ID.SERVO_RIGHT, degrees, false);
+            bot_servo_int(SERVO_ID.SERVO_ROTATE, degrees, false);
+            bot_servo_int(SERVO_ID.SERVO_JAW1, degrees, false);
+            bot_servo_int(SERVO_ID.SERVO_JAW2, degrees, false);
         }
         else {
             debug(`servo_internal ${ser_id}`)
-            bot_servo_int(ser_id, degrees) //, true);
+            bot_servo_int(ser_id, degrees, true);
         }
     }
 
-    export function bot_servo_int(ser_id: SERVO_ID, degrees: number): void {
+    function bot_servo_int(ser_id: SERVO_ID, degrees: number, limits: boolean): void {
         // Setup for standard, 180degree servo
         // Generate a pulse between 1ms and 2ms with 1.5ms being 90 degrees
         // 0 degrees = 1ms, 180 degrees = 2ms
         debug(`start of servo_int`)
         let on_time: number
         let off_time: number
-        let limits : boolean = true
 
         //Rising edge always at 0
         on_time = 0
