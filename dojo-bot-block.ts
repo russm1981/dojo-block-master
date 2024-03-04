@@ -283,23 +283,8 @@ namespace dojo {
 
     export function bot_joy_to_move(inputval: number): number {
         let amount_to_move = 0;
-        if (inputval > 3500) {
-            amount_to_move = -3
-        } else if (inputval > 3000) {
-            amount_to_move = -2
-        } else if (inputval > 2300) {
-            amount_to_move = -1
-        } else {
-            if (inputval < 550) {
-                amount_to_move = 3
-            } else if (inputval < 1100) {
-                amount_to_move = 2
-            } else if (inputval < 2100) {
-                amount_to_move = 1
-            } else {
-                amount_to_move = 0
-            }
-        }
+        //Input is +100 to -100.  -100 -> 3 and vv
+        amount_to_move = (-3 * inputval) / 100
         return amount_to_move;
     }
 
