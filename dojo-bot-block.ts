@@ -16,13 +16,7 @@ namespace dojo {
         }
     }
 
-    const MAX_BRIGHTNESS = 0.5
-
-    export class servo_info {
-        position: number = 90;
-        min: number = 0;
-        max: number = 180
-    }
+    const MAX_BRIGHTNESS = 0.4
 
     export class servo_position {
         left: number = 90;
@@ -32,11 +26,21 @@ namespace dojo {
         jaw2: number = 90;
     }
 
-    export let servo_left: servo_info;
-    export let servo_right: servo_info;
-    export let servo_rotate: servo_info;
-    export let servo_jaw1: servo_info;
-    export let servo_jaw2: servo_info;
+    export let servo_left_position: number = 90;
+    export let servo_left_min: number = 0;
+    export let servo_left_max: number = 180;
+    export let servo_right_position: number = 90;
+    export let servo_right_min: number = 0;
+    export let servo_right_max: number = 180;
+    export let servo_rotate_position: number = 90;
+    export let servo_rotate_min: number = 0;
+    export let servo_rotate_max: number = 180;
+    export let servo_jaw1_position: number = 90;
+    export let servo_jaw1_min: number = 0;
+    export let servo_jaw1_max: number = 180;
+    export let servo_jaw2_position: number = 90;
+    export let servo_jaw2_min: number = 0;
+    export let servo_jaw2_max: number = 180;
 
     export let positionA: servo_position
     export let positionB: servo_position
@@ -312,7 +316,7 @@ namespace dojo {
 
         write(PWM_REG_PRESCALE, pwm_prescale_servo)
 
-        //Set all outputs to zero
+        //Set all to zero
         write(PWM_REG_ALL_ON_L, 0x00)
         write(PWM_REG_ALL_ON_H, 0x00)
         write(PWM_REG_ALL_OFF_L, 0x00)
@@ -342,24 +346,24 @@ namespace dojo {
         max = Math.constrain(min, 90, 180)
         switch (ser_id) {
             case SERVO_ID.SERVO_LEFT:
-                servo_left.min = min
-                servo_left.max = max
+                servo_left_min = min
+                servo_left_max = max
                 break
             case SERVO_ID.SERVO_RIGHT:
-                servo_right.min = min
-                servo_right.max = max
+                servo_right_min = min
+                servo_right_max = max
                 break
             case SERVO_ID.SERVO_ROTATE:
-                servo_rotate.min = min
-                servo_rotate.max = max
+                servo_rotate_min = min
+                servo_rotate_max = max
                 break
             case SERVO_ID.SERVO_JAW1:
-                servo_jaw1.min = min
-                servo_jaw1.max = max
+                servo_jaw1_min = min
+                servo_jaw1_max = max
                 break
             case SERVO_ID.SERVO_JAW2:
-                servo_jaw2.min = min
-                servo_jaw2.max = max
+                servo_jaw2_min = min
+                servo_jaw2_max = max
                 break
         }
     }
@@ -375,19 +379,19 @@ namespace dojo {
         let val: number
         switch (ser_id) {
             case SERVO_ID.SERVO_LEFT:
-                val = servo_left.position
+                val = servo_left_position
                 break
             case SERVO_ID.SERVO_RIGHT:
-                val = servo_right.position
+                val = servo_right_position
                 break
             case SERVO_ID.SERVO_ROTATE:
-                val = servo_rotate.position
+                val = servo_rotate_position
                 break
             case SERVO_ID.SERVO_JAW1:
-                val = servo_jaw1.position
+                val = servo_jaw1_position
                 break
             case SERVO_ID.SERVO_JAW2:
-                val = servo_jaw2.position
+                val = servo_jaw2_position
                 break
         }
         return val
@@ -403,25 +407,25 @@ namespace dojo {
     export function bot_servo_store_position(position: POSITION_ID): void {
         switch (position) {
             case POSITION_ID.A:
-                positionA.left = servo_left.position
-                positionA.right = servo_right.position
-                positionA.rotate = servo_rotate.position
-                positionA.jaw1 = servo_jaw1.position
-                positionA.jaw2 = servo_jaw2.position
+                positionA.left = servo_left_position
+                positionA.right = servo_right_position
+                positionA.rotate = servo_rotate_position
+                positionA.jaw1 = servo_jaw1_position
+                positionA.jaw2 = servo_jaw2_position
                 break
             case POSITION_ID.B:
-                positionB.left = servo_left.position
-                positionB.right = servo_right.position
-                positionB.rotate = servo_rotate.position
-                positionB.jaw1 = servo_jaw1.position
-                positionB.jaw2 = servo_jaw2.position
+                positionB.left = servo_left_position
+                positionB.right = servo_right_position
+                positionB.rotate = servo_rotate_position
+                positionB.jaw1 = servo_jaw1_position
+                positionB.jaw2 = servo_jaw2_position
                 break
             case POSITION_ID.C:
-                positionC.left = servo_left.position
-                positionC.right = servo_right.position
-                positionC.rotate = servo_rotate.position
-                positionC.jaw1 = servo_jaw1.position
-                positionC.jaw2 = servo_jaw2.position
+                positionC.left = servo_left_position
+                positionC.right = servo_right_position
+                positionC.rotate = servo_rotate_position
+                positionC.jaw1 = servo_jaw1_position
+                positionC.jaw2 = servo_jaw2_position
                 break
         }
     }
@@ -469,26 +473,26 @@ namespace dojo {
         degrees_rel = Math.constrain(degrees_rel, -20, 20)
         switch (ser_id) {
             case SERVO_ID.SERVO_ALL:
-                bot_servo_internal(SERVO_ID.SERVO_LEFT, servo_left.position + degrees_rel, true);
-                bot_servo_internal(SERVO_ID.SERVO_RIGHT, servo_right.position + degrees_rel, true);
-                bot_servo_internal(SERVO_ID.SERVO_ROTATE, servo_rotate.position + degrees_rel, true);
-                bot_servo_internal(SERVO_ID.SERVO_JAW1, servo_jaw1.position + degrees_rel, true);
-                bot_servo_internal(SERVO_ID.SERVO_JAW2, servo_jaw2.position + degrees_rel, true);
+                bot_servo_int(SERVO_ID.SERVO_LEFT, servo_left_position + degrees_rel) //, true);
+                bot_servo_int(SERVO_ID.SERVO_RIGHT, servo_right_position + degrees_rel) //, true);
+                bot_servo_int(SERVO_ID.SERVO_ROTATE, servo_rotate_position + degrees_rel) //, true);
+                bot_servo_int(SERVO_ID.SERVO_JAW1, servo_jaw1_position + degrees_rel) //, true);
+                bot_servo_int(SERVO_ID.SERVO_JAW2, servo_jaw2_position + degrees_rel) //, true);
                 break
             case SERVO_ID.SERVO_LEFT:
-                bot_servo_internal(SERVO_ID.SERVO_LEFT, servo_left.position + degrees_rel, true);
+                bot_servo_int(SERVO_ID.SERVO_LEFT, servo_left_position + degrees_rel) //, true);
                 break
             case SERVO_ID.SERVO_RIGHT:
-                bot_servo_internal(SERVO_ID.SERVO_RIGHT, servo_right.position + degrees_rel, true);
+                bot_servo_int(SERVO_ID.SERVO_RIGHT, servo_right_position + degrees_rel) //, true);
                 break
             case SERVO_ID.SERVO_ROTATE:
-                bot_servo_internal(SERVO_ID.SERVO_ROTATE, servo_rotate.position + degrees_rel, true);
+                bot_servo_int(SERVO_ID.SERVO_ROTATE, servo_rotate_position + degrees_rel) //, true);
                 break
             case SERVO_ID.SERVO_JAW1:
-                bot_servo_internal(SERVO_ID.SERVO_JAW1, servo_jaw1.position + degrees_rel, true);
+                bot_servo_int(SERVO_ID.SERVO_JAW1, servo_jaw1_position + degrees_rel) //, true);
                 break
             case SERVO_ID.SERVO_JAW2:
-                bot_servo_internal(SERVO_ID.SERVO_JAW2, servo_jaw2.position + degrees_rel, true);
+                bot_servo_int(SERVO_ID.SERVO_JAW2, servo_jaw2_position + degrees_rel) //, true);
                 break
         }
     }
@@ -507,60 +511,77 @@ namespace dojo {
     //% group="Servos"
     export function bot_servo_position(ser_id: SERVO_ID, degrees: number): void {
         if (ser_id == SERVO_ID.SERVO_ALL) {
-            bot_servo_internal(SERVO_ID.SERVO_LEFT, degrees, false);
-            bot_servo_internal(SERVO_ID.SERVO_RIGHT, degrees, false);
-            bot_servo_internal(SERVO_ID.SERVO_ROTATE, degrees, false);
-            bot_servo_internal(SERVO_ID.SERVO_JAW1, degrees, false);
-            bot_servo_internal(SERVO_ID.SERVO_JAW2, degrees, false);
+            debug(`servo_internal ALL`)
+            bot_servo_int(SERVO_ID.SERVO_LEFT, degrees) //, false);
+            bot_servo_int(SERVO_ID.SERVO_RIGHT, degrees) //, false);
+            bot_servo_int(SERVO_ID.SERVO_ROTATE, degrees) //, false);
+            bot_servo_int(SERVO_ID.SERVO_JAW1, degrees) //, false);
+            bot_servo_int(SERVO_ID.SERVO_JAW2, degrees) //, false);
         }
         else {
-            bot_servo_internal(ser_id, degrees, true);
+            debug(`servo_internal ${ser_id}`)
+            bot_servo_int(ser_id, degrees) //, true);
         }
     }
 
-    function bot_servo_internal(ser_id: SERVO_ID, degrees: number, limits: boolean): void {
+    export function bot_servo_int(ser_id: SERVO_ID, degrees: number): void {
         // Setup for standard, 180degree servo
         // Generate a pulse between 1ms and 2ms with 1.5ms being 90 degrees
         // 0 degrees = 1ms, 180 degrees = 2ms
+        debug(`start of servo_int`)
         let on_time: number
         let off_time: number
+        let limits : boolean = true
 
         //Rising edge always at 0
         on_time = 0
         //Check position within bounds
+        debug(`servo_int before switch`)
         switch (ser_id) {
             case SERVO_ID.SERVO_LEFT:
+                debug(`left`)
                 if (limits == true) {
-                    degrees = Math.constrain(degrees, servo_left.min, servo_left.max)
+                    degrees = Math.max(servo_left_min, Math.min(servo_left_max, degrees))
                 }
-                servo_left.position = degrees
+                servo_left_position = degrees
+                debug(`servo left degrees ${degrees}`)
                 break
             case SERVO_ID.SERVO_RIGHT:
+                debug(`right`)
                 if (limits == true) {
-                    degrees = Math.constrain(degrees, servo_right.min, servo_right.max)
+                    degrees = Math.max(servo_right_min, Math.min(servo_right_max, degrees))
                 }
-                servo_right.position = degrees
+                servo_right_position = degrees
+                debug(`servo right degrees ${degrees}`)
                 break
             case SERVO_ID.SERVO_ROTATE:
+                debug(`rotate`)
                 if (limits == true) {
-                    degrees = Math.constrain(degrees, servo_rotate.min, servo_rotate.max)
+                    degrees = Math.max(servo_rotate_min, Math.min(servo_rotate_max, degrees))
                 }
-                servo_rotate.position = degrees
+                servo_rotate_position = degrees
+                debug(`servo rotate degrees ${degrees}`)
                 break
             case SERVO_ID.SERVO_JAW1:
+                debug(`jaw1`)
                 if (limits == true) {
-                    degrees = Math.constrain(degrees, servo_jaw1.min, servo_jaw1.max)
+                    degrees = Math.max(servo_jaw1_min, Math.min(servo_jaw1_max, degrees))
                 }
-                servo_jaw1.position = degrees
+                debug(`jaw1 position`)
+                servo_jaw1_position = degrees
+                debug(`servo jaw1 degrees ${degrees}`)
                 break
             case SERVO_ID.SERVO_JAW2:
+                debug(`jaw2`)
                 if (limits == true) {
-                    degrees = Math.constrain(degrees, servo_jaw2.min, servo_jaw2.max)
+                    degrees = Math.max(servo_jaw2_min, Math.min(servo_jaw2_max, degrees))
                 }
-                servo_jaw2.position = degrees
+                servo_jaw2_position = degrees
+                debug(`servo jaw2 degrees ${degrees}`)
                 break
         }
         degrees = Math.max(0, Math.min(180, degrees))
+        debug(`degrees limited 0 to 180 ${degrees}`)
 
         //In theory servo's require 1ms to 2ms pulses
         //However, in reality needs adjusting by servo
@@ -579,16 +600,17 @@ namespace dojo {
         //Want 650ms (133 counts) for 0 degrees plus 1700ms (348) for 180 degrees
         off_time = ((degrees * 4095 * 1.7) / (20 * 180)) + 133
         //Write that to appropriate servo based on id
-        ser_id = Math.max(0, Math.min(180, ser_id))
+        //Servos 0, 1, 4, 5, 6
+        ser_id = Math.max(0, Math.min(6, ser_id))
 
-        debug(`setServo ${ser_id}`)
+        debug(`Servo_internal setServo ${ser_id}`)
 
         const buffer = pins.createBuffer(2)
         const pinOffset = 4 * ser_id
         on_time = Math.max(0, Math.min(4095, on_time))
         off_time = Math.max(0, Math.min(4095, off_time))
 
-        debug(`On ${on_time}, Off ${off_time}, OS ${pinOffset}`)
+        debug(`Servo_internal  On ${on_time}, Off ${off_time}, OS ${pinOffset}`)
 
         // Low byte of onStep
         write(pinOffset + PWM_REG_CH0_ON_L, on_time & 0xFF)
@@ -622,14 +644,17 @@ namespace dojo {
         let blu_num: number
         let pinOffset: number
 
-        //Invert colours as we're sinking them
-        red = ~red
-        green = ~green
-        blue = ~blue
-        //Now set maximum brightness
+        //Set maximum brightness
+        debug(`RGB before ${red} ${green} ${blue}`)
         red = Math.round(red * MAX_BRIGHTNESS)
-        blue = Math.round(red * MAX_BRIGHTNESS)
-        green = Math.round(red * MAX_BRIGHTNESS)
+        blue = Math.round(blue * MAX_BRIGHTNESS)
+        green = Math.round(green * MAX_BRIGHTNESS)
+        //Invert colours as we're sinking them
+        debug(`RGB brightness adj ${red} ${green} ${blue}`)
+        red = 255 - red
+        green = 255 - green
+        blue = 255 - blue
+        debug(`RGB inverted ${red} ${green} ${blue}`)
 
         // If colour is set, then control it 
         // If colour is 0 then turn it Off
@@ -640,16 +665,19 @@ namespace dojo {
                 red_num = LED_CH.LED1R
                 grn_num = LED_CH.LED1G
                 blu_num = LED_CH.LED1B
+                debug(`LED ID 1, CH ${red_num} ${grn_num} ${blu_num}`)
                 break
             case LED_ID.LED2:
                 red_num = LED_CH.LED2R
                 grn_num = LED_CH.LED2G
                 blu_num = LED_CH.LED2B
+                debug(`LED ID 2, CH ${red_num} ${grn_num} ${blu_num}`)
                 break
             case LED_ID.LED3:
                 red_num = LED_CH.LED3R
                 grn_num = LED_CH.LED3G
                 blu_num = LED_CH.LED3B
+                debug(`LED ID 3, CH ${red_num} ${grn_num} ${blu_num}`)
                 break
             default:
                 debug(`bot_led - invalid LED value`)
@@ -661,6 +689,7 @@ namespace dojo {
         switch (red) {
             case -1:
                 //Don't do anything for RED
+                debug(`RED -1`)
                 break
             case 0:
                 //Turn RED off
@@ -668,6 +697,7 @@ namespace dojo {
                 write(pinOffset + PWM_REG_CH0_ON_H, pwm_output_never_on_h)
                 write(pinOffset + PWM_REG_CH0_OFF_L, pwm_output_never_off_l)
                 write(pinOffset + PWM_REG_CH0_OFF_H, pwm_output_never_off_h)
+                debug(`RED OFF at pin ${pinOffset}`)
                 break
             case 255:
                 //Turn RED fully on
@@ -675,22 +705,25 @@ namespace dojo {
                 write(pinOffset + PWM_REG_CH0_ON_H, pwm_output_always_on_h)
                 write(pinOffset + PWM_REG_CH0_OFF_L, pwm_output_always_off_l)
                 write(pinOffset + PWM_REG_CH0_OFF_H, pwm_output_always_off_h)
+                debug(`RED ON at pin ${pinOffset}`)
                 break
             default:
                 //Set RED value
                 red = Math.max(0, Math.min(255, red))
                 let red_val_on = 0
-                let red_val_off = (red * 4095) / 255
+                let red_val_off = Math.round((red * 4095) / 255)
                 write(pinOffset + PWM_REG_CH0_ON_L, 0)
                 write(pinOffset + PWM_REG_CH0_ON_H, 0)
                 write(pinOffset + PWM_REG_CH0_OFF_L, red_val_off & 0xFF)
                 write(pinOffset + PWM_REG_CH0_OFF_H, (red_val_off >> 8) & 0x0F)
+                debug(`RED VAL on ${red_val_on} off ${red_val_off} at pin ${pinOffset}`)
         }
 
         pinOffset = 4 * grn_num
         switch (green) {
             case -1:
                 //Don't do anything for GRN
+                debug(`GRN -1`)
                 break
             case 0:
                 //Turn GRN off
@@ -698,6 +731,7 @@ namespace dojo {
                 write(pinOffset + PWM_REG_CH0_ON_H, pwm_output_never_on_h)
                 write(pinOffset + PWM_REG_CH0_OFF_L, pwm_output_never_off_l)
                 write(pinOffset + PWM_REG_CH0_OFF_H, pwm_output_never_off_h)
+                debug(`GRN OFF at pin ${pinOffset}`)
                 break
             case 255:
                 //Turn GRN fully on
@@ -705,22 +739,25 @@ namespace dojo {
                 write(pinOffset + PWM_REG_CH0_ON_H, pwm_output_always_on_h)
                 write(pinOffset + PWM_REG_CH0_OFF_L, pwm_output_always_off_l)
                 write(pinOffset + PWM_REG_CH0_OFF_H, pwm_output_always_off_h)
+                debug(`GRN ON at pin ${pinOffset}`)
                 break
             default:
                 //Set GRN value
                 green = Math.max(0, Math.min(255, green))
                 let grn_val_on = 0
-                let grn_val_off = (green * 4095) / 255
+                let grn_val_off = Math.round((green * 4095) / 255)
                 write(pinOffset + PWM_REG_CH0_ON_L, 0)
                 write(pinOffset + PWM_REG_CH0_ON_H, 0)
                 write(pinOffset + PWM_REG_CH0_OFF_L, grn_val_off & 0xFF)
                 write(pinOffset + PWM_REG_CH0_OFF_H, (grn_val_off >> 8) & 0x0F)
+                debug(`GRN VAL on ${grn_val_on} off ${grn_val_off} at pin ${pinOffset}`)
         }
 
         pinOffset = 4 * blu_num
         switch (blue) {
             case -1:
                 //Don't do anything for BLUE
+                debug(`BLU -1`)
                 break
             case 0:
                 //Turn BLUE off
@@ -728,6 +765,7 @@ namespace dojo {
                 write(pinOffset + PWM_REG_CH0_ON_H, pwm_output_never_on_h)
                 write(pinOffset + PWM_REG_CH0_OFF_L, pwm_output_never_off_l)
                 write(pinOffset + PWM_REG_CH0_OFF_H, pwm_output_never_off_h)
+                debug(`BLU OFF at pin ${pinOffset}`)
                 break
             case 255:
                 //Turn BLUE fully on
@@ -735,16 +773,18 @@ namespace dojo {
                 write(pinOffset + PWM_REG_CH0_ON_H, pwm_output_always_on_h)
                 write(pinOffset + PWM_REG_CH0_OFF_L, pwm_output_always_off_l)
                 write(pinOffset + PWM_REG_CH0_OFF_H, pwm_output_always_off_h)
+                debug(`BLU ON at pin ${pinOffset}`)
                 break
             default:
                 //Set BLUE value
                 blue = Math.max(0, Math.min(255, blue))
                 let blu_val_on = 0
-                let blu_val_off = (blue * 4095) / 255
+                let blu_val_off = Math.round((blue * 4095) / 255)
                 write(pinOffset + PWM_REG_CH0_ON_L, 0)
                 write(pinOffset + PWM_REG_CH0_ON_H, 0)
                 write(pinOffset + PWM_REG_CH0_OFF_L, blu_val_off & 0xFF)
                 write(pinOffset + PWM_REG_CH0_OFF_H, (blu_val_off >> 8) & 0x0F)
+                debug(`BLU VAL on ${blu_val_on} off ${blu_val_off} at pin ${pinOffset}`)
         }
     }
 
@@ -759,6 +799,7 @@ namespace dojo {
         let red = colr >> 16
         let green = ((colr >> 8) & 0xFF)
         let blue = (colr & 0xFF)
+        debug(`LED COLOUR CONVERT id ${led} red ${red} green ${green} blue ${blue}`)
         bot_led_RGB(led, red, green, blue)
     }
 
