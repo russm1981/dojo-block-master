@@ -317,129 +317,55 @@ namespace dojo {
     }
 
     /**
-            * Set the limits for the position of the servo
-            * @param ser_id the servo ID, selected from list
-            * @param min is the minimum position (must be 0 - 90 degrees)
-            * @param max is the maximum position (must be 90 - 180 degrees)
-            */
-    //% block="Set limits %ser_id min %min to max %max" inlineInputMode=inline
-    //% group="Servos"
-    //% min.min=0  min.max=90  min.defl=0 min.fieldOptions.precision=1
-    //% max.min=90  max.max=180  max.defl=180 max.fieldOptions.precision=1
-    export function bot_servo_set_limits(ser_id: SERVO_ID, min: number, max: number): void {
-        min = Math.constrain(min, 0, 90)
-        max = Math.constrain(min, 90, 180)
-        switch (ser_id) {
-            case SERVO_ID.SERVO_LEFT:
-                servo_left_min = min
-                servo_left_max = max
-                break
-            case SERVO_ID.SERVO_RIGHT:
-                servo_right_min = min
-                servo_right_max = max
-                break
-            case SERVO_ID.SERVO_ROTATE:
-                servo_rotate_min = min
-                servo_rotate_max = max
-                break
-            case SERVO_ID.SERVO_JAW1:
-                servo_jaw1_min = min
-                servo_jaw1_max = max
-                break
-            case SERVO_ID.SERVO_JAW2:
-                servo_jaw2_min = min
-                servo_jaw2_max = max
-                break
-        }
-    }
-
-    /**
-        * Return the current position of the servo
-        * @param ser_id the servo ID, selected from list
-        * value is in degrees e.g. 90.3
-        */
-    //% block="Get servo position %ser_id"
-    //% group="Servos"
-    export function bot_servo_get_position(ser_id: SERVO_ID): number {
-        let val: number
-        switch (ser_id) {
-            case SERVO_ID.SERVO_LEFT:
-                val = servo_left_position
-                break
-            case SERVO_ID.SERVO_RIGHT:
-                val = servo_right_position
-                break
-            case SERVO_ID.SERVO_ROTATE:
-                val = servo_rotate_position
-                break
-            case SERVO_ID.SERVO_JAW1:
-                val = servo_jaw1_position
-                break
-            case SERVO_ID.SERVO_JAW2:
-                val = servo_jaw2_position
-                break
-        }
-        return val
-    }
-
-    /**
-        * Store current position of robot 
-        * @param position, selected from list
+        * Store current position of robot at A
         * Stores Left, Right, Rotate, Jaw1, Jaw2
         */
-    //% block="Store position %position"
+    //% block="Store position A"
     //% group="Servos"
-    export function bot_servo_store_position(position: POSITION_ID): void {
-        switch (position) {
-            case POSITION_ID.A:
+    export function bot_servo_store_positionA(): void {
                 positionA.left = servo_left_position
                 positionA.right = servo_right_position
                 positionA.rotate = servo_rotate_position
                 positionA.jaw1 = servo_jaw1_position
                 positionA.jaw2 = servo_jaw2_position
-                break
-            case POSITION_ID.B:
-                positionB.left = servo_left_position
-                positionB.right = servo_right_position
-                positionB.rotate = servo_rotate_position
-                positionB.jaw1 = servo_jaw1_position
-                positionB.jaw2 = servo_jaw2_position
-                break
-            case POSITION_ID.C:
-                positionC.left = servo_left_position
-                positionC.right = servo_right_position
-                positionC.rotate = servo_rotate_position
-                positionC.jaw1 = servo_jaw1_position
-                positionC.jaw2 = servo_jaw2_position
-                break
-        }
     }
 
     /**
-        * Move robot to a stored position 
-        * @param position selected from list
+        * Store current position of robot at B 
+        * Stores Left, Right, Rotate, Jaw1, Jaw2
+        */
+    //% block="Store position B"
+    //% group="Servos"
+    export function bot_servo_store_positionB(): void {
+        positionB.left = servo_left_position
+        positionB.right = servo_right_position
+        positionB.rotate = servo_rotate_position
+        positionB.jaw1 = servo_jaw1_position
+        positionB.jaw2 = servo_jaw2_position
+    }
+
+    /**
+        * Move robot to stored position A 
         * Moves Left, Right, Rotate BUT NOT Jaw1, Jaw2
         */
-    //% block="Go to position %position"
+    //% block="Go to position A"
     //% group="Servos"
-    export function bot_servo_go_position(position: POSITION_ID): void {
-        switch (position) {
-            case POSITION_ID.A:
+    export function bot_servo_go_positionA(): void {
                 bot_servo_position(SERVO_ID.SERVO_LEFT, positionA.left)
                 bot_servo_position(SERVO_ID.SERVO_RIGHT, positionA.right)
                 bot_servo_position(SERVO_ID.SERVO_ROTATE, positionA.rotate)
-                break
-            case POSITION_ID.B:
-                bot_servo_position(SERVO_ID.SERVO_LEFT, positionB.left)
-                bot_servo_position(SERVO_ID.SERVO_RIGHT, positionB.right)
-                bot_servo_position(SERVO_ID.SERVO_ROTATE, positionB.rotate)
-                break
-            case POSITION_ID.C:
-                bot_servo_position(SERVO_ID.SERVO_LEFT, positionC.left)
-                bot_servo_position(SERVO_ID.SERVO_RIGHT, positionC.right)
-                bot_servo_position(SERVO_ID.SERVO_ROTATE, positionC.rotate)
-                break
-        }
+    }
+
+    /**
+        * Move robot to stored position A 
+        * Moves Left, Right, Rotate BUT NOT Jaw1, Jaw2
+        */
+    //% block="Go to position A"
+    //% group="Servos"
+    export function bot_servo_go_positionB(): void {
+        bot_servo_position(SERVO_ID.SERVO_LEFT, positionB.left)
+        bot_servo_position(SERVO_ID.SERVO_RIGHT, positionB.right)
+        bot_servo_position(SERVO_ID.SERVO_ROTATE, positionB.rotate)
     }
 
     /**
