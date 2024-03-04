@@ -136,17 +136,17 @@ namespace dojo {
 
     export enum ADC_CH {
         //% block="Left JoyS Y"
-        ADC_CH_LEFTJOY_Y = 1,    //mismatch to v1 PCB label
+        ADC_CH_LEFTJOY_Y = 0,    
         //% block="Left JoyS X"
-        ADC_CH_LEFTJOY_X = 0,    //mismatch to v1 PCB label
+        ADC_CH_LEFTJOY_X = 1,    
         //% block="Slider"
         ADC_CH_SLIDE = 2,
         //% block="Expansion"
         ADC_CH_EXPANS = 3,
         //% block="Right JoyS Y"
-        ADC_CH_RIGHTJOY_Y = 5,    //mismatch to v1 PCB label
+        ADC_CH_RIGHTJOY_Y = 5,    
         //% block="Right JoyS X"
-        ADC_CH_RIGHTJOY_X = 4,    //mismatch to v1 PCB label
+        ADC_CH_RIGHTJOY_X = 4,    
         //% block="Knob"
         ADC_CH_KNOB = 6,
         //% block="PCB Version"
@@ -154,14 +154,14 @@ namespace dojo {
     }
 
     //ADC channel commands, 4LSB set so internal reference is ON and A to D is ON
-    const ADC_REG_CH_LEFTJOY_Y = 0x8C
-    const ADC_REG_CH_LEFTJOY_X = 0xCC
-    const ADC_REG_CH_SLIDE = 0x9C
-    const ADC_REG_CH_EXPANS = 0xDC
-    const ADC_REG_CH_RIGHTJOY_Y = 0xAC
-    const ADC_REG_CH_RIGHTJOY_X = 0xEC
-    const ADC_REG_CH_KNOB = 0xBC
-    const ADC_REG_CH_VERSION = 0xFC
+    const ADC_REG_CH_LEFTJOY_Y = 0x8C 
+    const ADC_REG_CH_LEFTJOY_X = 0xCC 
+    const ADC_REG_CH_SLIDE = 0x9C 
+    const ADC_REG_CH_EXPANS = 0xDC 
+    const ADC_REG_CH_RIGHTJOY_X = 0xAC 
+    const ADC_REG_CH_RIGHTJOY_Y = 0xEC 
+    const ADC_REG_CH_KNOB = 0xBC 
+    const ADC_REG_CH_VERSION = 0xFC 
 
     //ADC7828 Analog to Digital Chip Address
     const ADC_ADDR = 0x48               //This is 7bit address (in 8bit format it is 0x90)
@@ -324,11 +324,11 @@ namespace dojo {
     //% block="Store position A"
     //% group="Servos"
     export function bot_servo_store_positionA(): void {
-                positionA_left = servo_left_position
-                positionA_right = servo_right_position
-                positionA_rotate = servo_rotate_position
-                positionA_jaw1 = servo_jaw1_position
-                positionA_jaw2 = servo_jaw2_position
+        positionA_left = servo_left_position
+        positionA_right = servo_right_position
+        positionA_rotate = servo_rotate_position
+        positionA_jaw1 = servo_jaw1_position
+        positionA_jaw2 = servo_jaw2_position
     }
 
     /**
@@ -352,9 +352,9 @@ namespace dojo {
     //% block="Go to position A"
     //% group="Servos"
     export function bot_servo_go_positionA(): void {
-                bot_servo_position(SERVO_ID.SERVO_LEFT, positionA_left)
-                bot_servo_position(SERVO_ID.SERVO_RIGHT, positionA_right)
-                bot_servo_position(SERVO_ID.SERVO_ROTATE, positionA_rotate)
+        bot_servo_position(SERVO_ID.SERVO_LEFT, positionA_left)
+        bot_servo_position(SERVO_ID.SERVO_RIGHT, positionA_right)
+        bot_servo_position(SERVO_ID.SERVO_ROTATE, positionA_rotate)
     }
 
     /**
