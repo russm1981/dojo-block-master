@@ -18,14 +18,6 @@ namespace dojo {
 
     const MAX_BRIGHTNESS = 0.3
 
-    export class servo_position {
-        left: number = 90;
-        right: number = 90;
-        rotate: number = 90;
-        jaw1: number = 90;
-        jaw2: number = 90;
-    }
-
     export let servo_left_position: number = 90;
     export let servo_left_min: number = 0;
     export let servo_left_max: number = 180;
@@ -42,9 +34,18 @@ namespace dojo {
     export let servo_jaw2_min: number = 0;
     export let servo_jaw2_max: number = 180;
 
-    export let positionA: servo_position
-    export let positionB: servo_position
-    export let positionC: servo_position
+    export let positionA_left: number = 90
+    export let positionA_right: number = 90
+    export let positionA_rotate: number = 90
+    export let positionA_jaw1: number = 90
+    export let positionA_jaw2: number = 90
+
+    export let positionB_left: number = 90
+    export let positionB_right: number = 90
+    export let positionB_rotate: number = 90
+    export let positionB_jaw1: number = 90
+    export let positionB_jaw2: number = 90
+
 
     export enum LED_ID {
         //% block="LED1"
@@ -323,11 +324,11 @@ namespace dojo {
     //% block="Store position A"
     //% group="Servos"
     export function bot_servo_store_positionA(): void {
-                positionA.left = servo_left_position
-                positionA.right = servo_right_position
-                positionA.rotate = servo_rotate_position
-                positionA.jaw1 = servo_jaw1_position
-                positionA.jaw2 = servo_jaw2_position
+                positionA_left = servo_left_position
+                positionA_right = servo_right_position
+                positionA_rotate = servo_rotate_position
+                positionA_jaw1 = servo_jaw1_position
+                positionA_jaw2 = servo_jaw2_position
     }
 
     /**
@@ -337,11 +338,11 @@ namespace dojo {
     //% block="Store position B"
     //% group="Servos"
     export function bot_servo_store_positionB(): void {
-        positionB.left = servo_left_position
-        positionB.right = servo_right_position
-        positionB.rotate = servo_rotate_position
-        positionB.jaw1 = servo_jaw1_position
-        positionB.jaw2 = servo_jaw2_position
+        positionB_left = servo_left_position
+        positionB_right = servo_right_position
+        positionB_rotate = servo_rotate_position
+        positionB_jaw1 = servo_jaw1_position
+        positionB_jaw2 = servo_jaw2_position
     }
 
     /**
@@ -351,9 +352,9 @@ namespace dojo {
     //% block="Go to position A"
     //% group="Servos"
     export function bot_servo_go_positionA(): void {
-                bot_servo_position(SERVO_ID.SERVO_LEFT, positionA.left)
-                bot_servo_position(SERVO_ID.SERVO_RIGHT, positionA.right)
-                bot_servo_position(SERVO_ID.SERVO_ROTATE, positionA.rotate)
+                bot_servo_position(SERVO_ID.SERVO_LEFT, positionA_left)
+                bot_servo_position(SERVO_ID.SERVO_RIGHT, positionA_right)
+                bot_servo_position(SERVO_ID.SERVO_ROTATE, positionA_rotate)
     }
 
     /**
@@ -363,9 +364,9 @@ namespace dojo {
     //% block="Go to position A"
     //% group="Servos"
     export function bot_servo_go_positionB(): void {
-        bot_servo_position(SERVO_ID.SERVO_LEFT, positionB.left)
-        bot_servo_position(SERVO_ID.SERVO_RIGHT, positionB.right)
-        bot_servo_position(SERVO_ID.SERVO_ROTATE, positionB.rotate)
+        bot_servo_position(SERVO_ID.SERVO_LEFT, positionB_left)
+        bot_servo_position(SERVO_ID.SERVO_RIGHT, positionB_right)
+        bot_servo_position(SERVO_ID.SERVO_ROTATE, positionB_rotate)
     }
 
     /**
