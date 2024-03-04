@@ -16,8 +16,7 @@ dojo.bot_led_RGB(dojo.LED_ID.LED1, 0, 0, 255)
 dojo.bot_led_colour(dojo.LED_ID.LED2, dojo.COLOUR.YELLOW)
 dojo.bot_led_RGB(dojo.LED_ID.LED3, 255, 0, 0)
 
-dojo.bot_servo_int(dojo.SERVO_ID.SERVO_JAW1, 45)
-//dojo.bot_servo_position(dojo.SERVO_ID.SERVO_JAW1, 45)
+dojo.bot_servo_position(dojo.SERVO_ID.SERVO_JAW1, 45)
 
 
 
